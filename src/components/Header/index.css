@@ -1,0 +1,50 @@
+.header__wrapper {
+    padding: 25px 20px;
+    background-color: rgb(54, 52, 52);
+    color: rgb(224, 218, 209);
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.header__logo {
+    display: inline-block;
+    font-family: Verdana;
+    font-size: 40px;
+    cursor: pointer;
+}
+.header__logo:hover {
+    color: rgb(247, 207, 147);
+}
+
+.header__menu {
+    display: flex;
+    align-items: center;
+    /*vertical*/
+    text-transform: uppercase;
+
+}
+
+.header__menu-item {
+    display: inline-block;
+    border: 1px solid rgb(54, 52, 52);
+    border-radius: 5px;
+    box-sizing: border-box;
+    padding: 10px;
+    margin-right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    
+}
+.header__menu-link{
+    display: inline-block;
+    text-decoration: none;
+    color: rgb(224, 218, 209);
+}
+
+.header__menu-item:hover {
+    color: rgb(247, 207, 147);
+    border-color: rgb(247, 207, 147);
+    background-color: rgb(87, 84, 84);
+    box-sizing: border-box;
+}
