@@ -13,6 +13,17 @@ class ModalWindow extends Component {
       isValidMail : true,
       isValidPassword : true,
       isLogin: true,
+      users:  [
+        // {
+        //   mail: 'T@Mail.ru',
+        //   password: 11111,
+        // },
+        // {
+        //   mail: 'O@log.net',
+        //   password: 12345,
+        // },
+        
+      ], //add a users
     }
   }
 
@@ -24,6 +35,16 @@ class ModalWindow extends Component {
   passwordInput = (event) => {
     this.setState({password: event.target.value})
   };
+
+
+  componentDidMount(){ //setState users from LocalStprage
+    let users = JSON.parse(localStorage.getItem('users'));
+    if ( !users ) {
+      this.setState({ users:[] })
+    }else{
+      this.setState({ users:users })
+    }
+  }
     
 
   render(){
@@ -34,14 +55,21 @@ class ModalWindow extends Component {
     let loginSucses = '';
     
 
+
+
     const submitModal = () =>{
-      if( validator() ){
-        console.log('valid');
+      if ( validator() ){
+        if ( checkMail() ){
+            alert('come in')
+          }else{
+            alert('password is not valid')
+          }
+        }else{
+        // console.log('valid');
+        addNewUser();
         this.setState({ isLogin: false });
         setTimeout(modalClose, 1800);
       }
-      // modalClose();
-
     }
 
 
@@ -74,19 +102,81 @@ class ModalWindow extends Component {
         return true;
       }
       
-
-
-      // if (this.state.isValidMail && this.state.isValidPassword) {
-      //   return console.log("VALID");
-      // } else {
-      //   return console.log("INVALID");
-      // }
-
-      // return this.setState({ mail: this.state.mail + 1});
-      // console.log(this.state.mail);
-      // modalClose();
     };
 
+
+    const createNewUser = () =>{
+        return {
+          mail: this.state.mail,
+          password: this.state.password,
+        }
+    }
+
+
+    const addNewUser = () => {
+      console.log(this.state.users);
+      let obj = createNewUser();
+      let [ ...prevState ] = this.state.users;
+      let newUsers = [ ...prevState, obj ];
+      updateLocalStor(newUsers);
+      return  this.setState({ users: newUsers });
+    }
+
+
+    const updateLocalStor = (newUsers) => {
+      localStorage.setItem('users', JSON.stringify(newUsers));  
+    }
+
+
+    const checkPas = (user) => {
+      let { password } = this.state;
+
+      if(user.password === password){
+        return true;
+      }else{
+        return false;
+      }
+  } 
+
+    const checkMail = () =>{
+      let {mail, users} = this.state;
+      let user = users.filter( user => (user.mail === mail));
+      console.log(user)
+      if ( user.length > 0 ){
+        return checkPas(user)
+      }else{
+         return false
+      }
+
+    // const verifyData = () => {
+    //   if ( checkPas() )
+    // }
+
+      
+
+      // users.forEach((obj) =>{
+      // if(obj.mail === mail){
+      //   console.log(true);
+      //   return true;
+      // }
+      // })
+      
+    }
+
+
+   
+    // const getLocalStor = () => {
+    //   let users = [];
+    //   users = JSON.parse(localStorage.getItem('users'));
+    //   return users;
+    // }
+
+
+    const getUsers = () => {
+      checkMail();
+      console.log(this.state.users);
+    }
+   
 
     if (!this.state.isValidMail){
       wrongMail = <p className='modal__warning'>Entered email is incorect</p>
@@ -120,10 +210,12 @@ class ModalWindow extends Component {
       
                 <button className='modal__button' type="button" 
                 onClick={submitModal}>SUBMIT</button>
-                <button className='modal__button' type="button">
-                  REGISTRATION</button>
+                {/* <button className='modal__button' type="button" onClick={addNewUser}>
+                  REGISTRATION</button> */}
                 <button className='modal__button red' type="button" 
                   onClick={modalClose}>CANCEL</button>
+                  <button className='modal__button red' type="button" 
+                  onClick={getUsers}>CHECK!@!</button>
               </form>
             </div>
           </div>
