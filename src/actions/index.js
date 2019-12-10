@@ -13,22 +13,17 @@ export const modalClose = () => {
 }
 
 
-// MODAL_FORM
-export const modalSubmit = () => {
+export const logIn = (payload) => {
+    console.log('action: logIn')
     return {
-        type: 'MODAL_SUBMIT',
-    }
-}
-export const mailInput = () => {
-    return {
-        type: 'MAIL_INPUT',
-        payload: 2,
+        type: 'LOG_IN',
+        payload: payload,//&&&&&&&&&&&&&&&&&&&&&&
     }
 }
 
 
-
-// export {
-//     modalOpen,
-//     modalClose,
-// }
+export const logOut = () => {
+    return {
+        type: 'LOG_OUT',
+    }
+}

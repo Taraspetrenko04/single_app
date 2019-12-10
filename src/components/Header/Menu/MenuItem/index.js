@@ -5,33 +5,48 @@ import * as actions from "../../../../actions"; //импортируем все 
 // import { Link } from 'react-router-dom';
 //добавить url
 
-const MenuItem = ( { modalOpen} ) => {
+const MenuItem = ( { modalOpen, logOut, isLogged} ) => {
+    let log = '';
+    if( !isLogged ){
+       log = <li className="header__menu-item" key={3} onClick={modalOpen}>
+        LOGIN </li>;
+
+    }else{
+       log = <li className="header__menu-item" key={4} onClick={logOut}>
+        LOGOUT </li>;
+    }
     return(
     <React.Fragment>
         <li className="header__menu-item" key={1}>
             HOME
         </li>
-        <li className="header__menu-item" key={2}>
+        <li className="header__menu-item" key={2}> 
             GOODS
         </li>
-        <li className="header__menu-item" key={3} onClick={modalOpen}>
+        {log}
+        {/* <li className="header__menu-item" key={3} onClick={modalOpen}>
             LOGIN
         </li>
+        <li className="header__menu-item" key={4} onClick={logOut}>
+            LOGOUT
+        </li> */}
     </React.Fragment>
     )
 }
 
 
 const mapStateToProps = state => {
-    return {};
+    return {
+        isLogged: state.modal.isLogged,
+    };
   };
 
 
 const mapDispatchToProps = dispatch => {
-    // console.log('mapDispatchtoprops');
-    const { modalOpen } = bindActionCreators(actions, dispatch);
+    const { modalOpen, logOut } = bindActionCreators(actions, dispatch);
     return {
         modalOpen,
+        logOut,
     };
   };
   
